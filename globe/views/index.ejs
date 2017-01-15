@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title>WebGL Globe</title>
+  <meta charset="utf-8">
+  <style type="text/css">
+    html {
+      height: 100%;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: #000000 url(/loading.gif) center center no-repeat;
+      color: #ffffff;
+      font-family: sans-serif;
+      font-size: 13px;
+      line-height: 20px;
+      height: 100%;
+    }
+
+    a {
+      color: #aaa;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .bull {
+      padding: 0px 5px;
+      color: #555;
+    }
+
+    #title {
+      position: absolute;
+      top: 20px;
+      width: 320px;
+      left: 20px;
+      background-color: rgba(0, 0, 0, 0.2);
+      font: 20px/20px Georgia;
+      padding: 15px;
+      line-height:1.2;
+    }
+
+    #info {
+
+      font-size: 11px;
+      position: absolute;
+      bottom: 5px;
+      background-color: rgba(0, 0, 0, 0.8);
+      border-radius: 3px;
+      right: 10px;
+      padding: 10px;
+
+    }
+
+    #tweet {
+      position: absolute;
+      bottom: 15px;
+      left:15px;
+      width: 400px;
+      font-family:Georgia;
+    }
+
+    #tweet-name {
+      font-size:20px;
+    }
+
+    #tweet-screen-name {
+      font-size:16px;
+      margin-bottom:10px;
+      color:#c6c6c6;
+    }
+
+    #tweet-body {
+      font-size:25px;
+      margin-bottom:12px;
+      line-height: 1.1;
+    }
+
+    #tweet-score-container {
+      font-size:20px;
+    }
+
+
+
+  </style>
+</head>
+<body>
+
+<div id="container"></div>
+
+<div id="info">
+  The <a href="http://www.chromeexperiments.com/globe">WebGL Globe</a> is an
+  open platform for visualizing geographic data. <span
+    class="bull">&bull;</span> <a href="https://github.com/dataarts/webgl-globe">Get
+  the code</a> <span class="bull">&bull;</span> By the Google Data Arts Team</a>
+</div>
+
+<div id="title">
+  Geographical Sentiment Analysis of Trump-Related Tweets
+</div>
+
+<div id="tweet">
+  <div id="tweet-name">Hello</div>
+  <div id="tweet-screen-name">Please wait...</div>
+  <div id="tweet-body">We are loading data!</div>
+  <div id="tweet-score-container">Score: <span id="tweet-score">0</span></div>
+</div>
+
+
+<script type="text/javascript" src="/third-party/Detector.js"></script>
+<script type="text/javascript" src="/third-party/three.min.js"></script>
+<script type="text/javascript" src="/third-party/Tween.js"></script>
+<script type="text/javascript" src="/globe.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script type="text/javascript">
+  var socket = io();
+  var color;
+  var initialized = false;
+
+  var globe = DAT.Globe(document.getElementById('container'), {
+    colorFn: function(label) {
+
+
+       return new THREE.Color([
+         0xd9d9d9, 0xb6b4b5, 0x9966cc, 0x15adff, 0x3e66a3,
+         0x216288, 0xff7e7e, 0xff1f13, 0xc0120b, 0x5a1301, 0xffcc02,
+         0xedb113, 0x9fce66, 0x0c9a39,
+         0xfe9872, 0x7f3f98, 0xf26522, 0x2bb673, 0xd7df23,
+         0xe6b23a, 0x7ed3f7][label]);
+    }
+    //17 is green
+    //7 is red
+
+
+
+  });
+
+  window.setInterval(function() {
+
+    socket.emit("get data");
+    console.log("getting...");
+  }, 3000);
+
+
+  socket.on("get data", function(currentEvent) {
+    // console.log(currentEvent);
+    if (currentEvent.comparative < 0) {
+      color = 7;
+      document.getElementById("tweet-score").style.color = "red";
+    } else if (currentEvent.comparative != 0) {
+      color = 17;
+      document.getElementById("tweet-score").style.color = "green";
+    } else {
+      color = 0;
+      document.getElementById("tweet-score").style.color = "white";
+    }
+    console.log("lat: " + currentEvent.latitude + " | long: " + currentEvent.longitude + " | comparative: " + currentEvent.comparative);
+    globe.addData([currentEvent.latitude,currentEvent.longitude, Math.abs(currentEvent.comparative), color], {format: "legend"});
+    if (!initialized) {
+      globe.animate();
+      initialized = true;
+    }
+    globe.createPoints();
+
+    document.getElementById("tweet-name").innerHTML = currentEvent.name;
+    document.getElementById("tweet-body").innerHTML = currentEvent.text;
+    document.getElementById("tweet-screen-name").innerHTML = "@" + currentEvent.screen_name;
+    document.getElementById("tweet-score").innerHTML = currentEvent.comparative;
+
+  });
+
+  document.body.style.backgroundImage = 'none'; // remove loading
+
+
+</script>
+
+
+</body>
+
+</html>

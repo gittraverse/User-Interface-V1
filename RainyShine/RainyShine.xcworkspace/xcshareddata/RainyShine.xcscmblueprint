@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "17762F3686F2F74B0C3D58CAABF6C61CE4A1FFBB",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "17762F3686F2F74B0C3D58CAABF6C61CE4A1FFBB" : 9223372036854775807,
+    "B60BCCF4265B55158F686C7D4B3B46DB4F826E79" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "B791FA2B-05EA-43B3-B3AC-34068A9C6BA7",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "17762F3686F2F74B0C3D58CAABF6C61CE4A1FFBB" : "RainyShine\/",
+    "B60BCCF4265B55158F686C7D4B3B46DB4F826E79" : ""
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "RainyShine",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "RainyShine.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/matthewnchung\/Practice-Weather-App.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "17762F3686F2F74B0C3D58CAABF6C61CE4A1FFBB"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/gittraverse\/User-Interface-V1.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "B60BCCF4265B55158F686C7D4B3B46DB4F826E79"
+    }
+  ]
+}
